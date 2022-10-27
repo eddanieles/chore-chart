@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DashboardView from '../views/DashboardView.vue'
+import KidView from '../views/KidView.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,10 @@ const routes = [
   {
     path: '/dashboard',
     component: DashboardView
+  },
+  {
+    path: '/kid/:id',
+    component: KidView
   }
 ]
 

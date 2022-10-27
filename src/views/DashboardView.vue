@@ -5,13 +5,15 @@
     
     <div class="grid grid-rows-2 grid-flow-col gap-4">
         <div v-for="kid in this.kids" :key="kid.id" class="border-2 m-2 rounded border-double">
-            <div>{{kid.name}}</div>
-            <ul>
-                <li v-for="chore in kid.chores" :key="chore.id" class="list-disc list-inside">
-                    <span v-if="`${chore.done}` == 'true'" class="line-through">{{chore.chore}}</span>
-                    <span v-else>{{chore.chore}}</span>
-                </li>
-            </ul>    
+            <router-link :to="`/kid/${kid.id}`" :kid="kid">
+                <div>{{kid.name}}</div>
+                <ul>
+                    <li v-for="chore in kid.chores" :key="chore.id" class="list-disc list-inside">
+                        <span v-if="`${chore.done}` == 'true'" class="line-through">{{chore.chore}}</span>
+                        <span v-else>{{chore.chore}}</span>
+                    </li>
+                </ul>  
+            </router-link>  
         </div>
     </div>
     <form @submit.prevent="addKid">
