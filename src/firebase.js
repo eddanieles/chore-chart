@@ -1,6 +1,5 @@
-import { firebase } from '@firebase/app'
-import '@firebase/auth'
-import '@firebase/firestore'
+import { initializeApp } from "firebase/app"
+import { getFirestore } from "firebase/firestore";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -11,24 +10,12 @@ const firebaseConfig = {
     messagingSenderId: "329584946766",
     appId: "1:329584946766:web:53c42f7104392bbbce1d1f"
   };
-firebase.initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig);
 
 // utils
-const db = firebase.firestore();
-const auth = firebase.auth();
-
-// collection references
-// const usersCollection = db.collection('users');
-// const favoritesCollection = db.collection('favorites');
-// const trylistCollection = db.collection('trylist');
-// const networkCollection = db.collection('network');
+const db = getFirestore(app);
 
 // export utils/refs
 export {
-    db,
-    auth
-    // usersCollection,
-    // favoritesCollection,
-    // trylistCollection,
-    // networkCollection
+    db
 }
