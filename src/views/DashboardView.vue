@@ -2,9 +2,9 @@
   <div>
     <div>Dashboard</div>
     <div>Kids</div>
-
-    <div class="grid grid-rows-1 grid-flow-col gap-4">
-        <div v-for="kid in this.kids" :key="kid.id" class="border-2 m-2">
+    
+    <div class="grid grid-rows-2 grid-flow-col gap-4">
+        <div v-for="kid in this.kids" :key="kid.id" class="border-2 m-2 rounded border-double">
             <div>{{kid.name}}</div>
             <ul>
                 <li v-for="chore in kid.chores" :key="chore.id" class="list-disc list-inside">
@@ -14,12 +14,16 @@
             </ul>    
         </div>
     </div>
+    <form @submit.prevent="addKid">
+        <input type="text" ref="name" class="form-input rounded m-2">
+        <button class="bg-emerald-400 rounded-full p-2">Add Kid</button>
+    </form>
   </div>
 </template>
 
 <script>
 import { db } from '../firebase'
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 
 export default {
     data() {
@@ -44,15 +48,23 @@ export default {
                     kidChores.push({
                         id: doc.id,
                         chore: doc.data().chore,
-                        done: doc.data().done ? true : false
+                        done: doc.data().done
                     })
                 });
                 that.kids.push({
                     id: doc.id,
                     name: doc.data().name,
                     chores: kidChores
-                })
+                });
             });
+        },
+        async addKid() {
+            let that = this;
+            await addDoc(collection(db, "kids"), {
+                created_date: Date.now(),
+                name: that.$refs.name.value
+            });
+            this.$refs.name.value = ""
         }
     },
     mounted() {
