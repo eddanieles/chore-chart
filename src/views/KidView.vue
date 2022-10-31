@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div class="text-emerald-400 text-3xl font-semibold underline">{{this.name}}</div>
+    <div class="text-emerald-400 text-3xl font-semibold underline">
+        <span class="inline-flex">
+            <img class="w-10 h-10 rounded-full" :src="require(`../assets/${this.name}.png`)" alt="../assets/default_profile.png">
+            {{this.name}}
+        </span>
+    </div>
     <ul>
         <li v-for="chore in this.chores" :key="chore.id" class="list-disc list-inside">
             <span v-if="`${chore.done}` == 'true'" class="line-through inline-flex">
