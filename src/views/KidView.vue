@@ -7,13 +7,17 @@
             <span v-else>{{chore.chore}}</span>
         </li>
     </ul> 
+    <form @submit.prevent="addChore">
+        <input type="text" ref="chore" class="form-input rounded m-2">
+        <button class="bg-emerald-400 rounded-full p-2">Add Chore</button>
+    </form>
     <button @click="deleteKid" class="bg-emerald-400 rounded-full p-2">Delete Kid</button> 
   </div>
 </template>
 
 <script>
 import { db } from '../firebase'
-import { collection, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where, deleteDoc, addDoc } from "firebase/firestore";
 import router from '../router/index.js'
 
 export default {
@@ -55,6 +59,23 @@ export default {
             let that = this;
             await deleteDoc(doc(db, "kids", that.$route.params.id));
             router.push({ path: '/dashboard'});
+        },
+        async addChore() {
+            let that = this;
+            await addDoc(collection(db, "chores"), {
+                created_date: Date.now(),
+                chore: that.$refs.chore.value,
+                kid: that.$route.params.id,
+                done: false
+            })
+                .then(data => {
+                    that.chores.push({
+                        id: data.id,
+                        chore: that.$refs.chore.value,
+                        done: false
+                    })
+                });
+            this.$refs.chore.value = "";
         }
     },
     mounted() {
