@@ -4,6 +4,14 @@ import HomeView from '../views/HomeView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import KidView from '../views/KidView.vue'
 
+// register the plugin on vue
+import VIcon from 'vue-tailwind-icons';
+
+Vue.use(VIcon)
+
+// you can also set the default icon set, check below for set names
+Vue.use(VIcon, { set: 'outline' })
+
 Vue.use(VueRouter)
 
 const routes = [

@@ -3,8 +3,14 @@
     {{this.name}}
     <ul>
         <li v-for="chore in this.chores" :key="chore.id" class="list-disc list-inside">
-            <span v-if="`${chore.done}` == 'true'" class="line-through">{{chore.chore}}</span>
-            <span v-else>{{chore.chore}}</span>
+            <span v-if="`${chore.done}` == 'true'" class="line-through inline-flex">
+                {{chore.chore}}
+                <icon name="trash" class="w-6 h-6" />
+            </span>
+            <span v-else class="inline-flex">
+                {{chore.chore}}
+                <icon name="check-circle" class="w-6 h-6" />
+            </span>
         </li>
     </ul> 
     <form @submit.prevent="addChore">
