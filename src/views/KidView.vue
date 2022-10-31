@@ -11,7 +11,7 @@
         <input type="text" ref="chore" class="form-input rounded m-2">
         <button class="bg-emerald-400 rounded-full p-2">Add Chore</button>
     </form>
-    <button @click="deleteKid" class="bg-emerald-400 rounded-full p-2">Delete Kid</button> 
+    <button @click="deleteKid" class="bg-red-400 rounded-full p-2">Delete Kid</button> 
   </div>
 </template>
 
