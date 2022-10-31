@@ -2,14 +2,15 @@
   <div>
     {{this.name}}
     <ul>
-        <li v-for="chore in this.chores" :key="chore.id" class="list-disc list-inside" @click="updateChore(chore.id)">
+        <li v-for="chore in this.chores" :key="chore.id" class="list-disc list-inside">
             <span v-if="`${chore.done}` == 'true'" class="line-through inline-flex">
-                {{chore.chore}}
-                <icon name="trash" class="w-6 h-6" />
+                <span @click="updateChore(chore.id)">{{chore.chore}}</span>
+                <span @click="deleteChore(chore.id)">
+                    <icon name="trash" class="w-6 h-6" />
+                </span>
             </span>
             <span v-else class="inline-flex">
-                {{chore.chore}}
-                <!-- <icon name="check-circle" class="w-6 h-6" /> -->
+                <span @click="updateChore(chore.id)">{{chore.chore}}</span>
             </span>
         </li>
     </ul> 
@@ -53,6 +54,7 @@ export default {
             let q = query(choresRef, where("kid", "==", this.$route.params.id))
             // console.log(q);
             const querySnapshotChores = await getDocs(q);
+            that.chores = [];
             querySnapshotChores.forEach((doc) => {
                 that.chores.push({
                     id: doc.id,
@@ -95,6 +97,10 @@ export default {
                     let clickedChore = that.chores.find(chore => chore.id === id);
                     clickedChore.done = !clickedChore.done
                 });
+        },
+        async deleteChore(id) {
+            await deleteDoc(doc(db, "chores", id));
+            this.fetchChores();
         }
     },
     mounted() {
