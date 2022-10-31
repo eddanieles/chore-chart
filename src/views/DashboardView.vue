@@ -65,7 +65,13 @@ export default {
             await addDoc(collection(db, "kids"), {
                 created_date: Date.now(),
                 name: that.$refs.name.value
-            });
+            })
+                .then(data => {
+                        that.kids.push({
+                            id: data.id,
+                            name: that.$refs.name.value
+                        })
+                    });
             this.$refs.name.value = ""
         }
     },
