@@ -6,13 +6,15 @@
             <span v-if="`${chore.done}` == 'true'" class="line-through">{{chore.chore}}</span>
             <span v-else>{{chore.chore}}</span>
         </li>
-    </ul>  
+    </ul> 
+    <button @click="deleteKid" class="bg-emerald-400 rounded-full p-2">Delete Kid</button> 
   </div>
 </template>
 
 <script>
 import { db } from '../firebase'
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where, deleteDoc } from "firebase/firestore";
+import router from '../router/index.js'
 
 export default {
     data() {
@@ -48,6 +50,11 @@ export default {
                     done: doc.data().done
                 })
             });
+        },
+        async deleteKid() {
+            let that = this;
+            await deleteDoc(doc(db, "kids", that.$route.params.id));
+            router.push({ path: '/dashboard'});
         }
     },
     mounted() {
