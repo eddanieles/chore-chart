@@ -2,14 +2,14 @@
   <div>
     {{this.name}}
     <ul>
-        <li v-for="chore in this.chores" :key="chore.id" class="list-disc list-inside">
+        <li v-for="chore in this.chores" :key="chore.id" class="list-disc list-inside" @click="updateChore(chore.id)">
             <span v-if="`${chore.done}` == 'true'" class="line-through inline-flex">
                 {{chore.chore}}
                 <icon name="trash" class="w-6 h-6" />
             </span>
             <span v-else class="inline-flex">
                 {{chore.chore}}
-                <icon name="check-circle" class="w-6 h-6" />
+                <!-- <icon name="check-circle" class="w-6 h-6" /> -->
             </span>
         </li>
     </ul> 
@@ -23,7 +23,7 @@
 
 <script>
 import { db } from '../firebase'
-import { collection, doc, getDoc, getDocs, query, where, deleteDoc, addDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where, deleteDoc, addDoc, updateDoc } from "firebase/firestore";
 import router from '../router/index.js'
 
 export default {
@@ -82,6 +82,19 @@ export default {
                     })
                 });
             this.$refs.chore.value = "";
+        },
+        async updateChore(id) {
+            let that = this;
+            const choreRef = doc(db, "chores", id);
+            const docSnap = await getDoc(choreRef);
+
+            await updateDoc(choreRef, {
+                done: !docSnap.data().done
+            })
+                .then(() => {
+                    let clickedChore = that.chores.find(chore => chore.id === id);
+                    clickedChore.done = !clickedChore.done
+                });
         }
     },
     mounted() {
