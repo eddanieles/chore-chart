@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{this.name}}
+    <div class="text-emerald-400 text-3xl font-semibold underline">{{this.name}}</div>
     <ul>
         <li v-for="chore in this.chores" :key="chore.id" class="list-disc list-inside">
             <span v-if="`${chore.done}` == 'true'" class="line-through inline-flex">

@@ -1,12 +1,10 @@
 <template>
   <div>
-    <div>Dashboard</div>
-    <div>Kids</div>
-    
-    <div class="grid grid-rows-2 grid-flow-col gap-4">
+    <div class="text-emerald-400 text-3xl font-semibold underline">Kids</div>
+    <div class="grid md:grid-cols-1 sm:grid-cols-1">
         <div v-for="kid in this.kids" :key="kid.id" class="border-2 m-2 rounded border-double">
             <router-link :to="`/kid/${kid.id}`" :kid="kid">
-                <div>{{kid.name}}</div>
+                <div class="text-emerald-400 font-bold">{{kid.name}}</div>
                 <ul>
                     <li v-for="chore in kid.chores" :key="chore.id" class="list-disc list-inside">
                         <span v-if="`${chore.done}` == 'true'" class="line-through">{{chore.chore}}</span>
