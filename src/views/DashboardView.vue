@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-emerald-400 text-3xl font-semibold underline">Kids</div>
-    <div class="grid">
+    <div class="grid lg:grid-cols-2 gap-4 md:grid-cols-1">
         <div v-for="kid in this.kids" :key="kid.id" class="border-2 m-2 rounded border-double">
             <router-link :to="`/kid/${kid.id}`" :kid="kid">
                 <div class="text-emerald-400 font-bold">
