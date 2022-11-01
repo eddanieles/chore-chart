@@ -2,11 +2,16 @@
   <div>
     <div class="text-emerald-400 text-3xl font-semibold underline">Kids</div>
     <div class="grid lg:grid-cols-2 gap-4 md:grid-cols-1">
-        <div v-for="kid in this.kids" :key="kid.id" class="border-2 m-2 rounded border-double">
+        <div v-for="kid in kids" :key="kid.id" class="border-2 m-2 rounded border-double">
             <router-link :to="`/kid/${kid.id}`" :kid="kid">
                 <div class="text-emerald-400 font-bold">
                     <span class="inline-flex">
-                        <img class="w-7 h-7 rounded-full" :src="require(`../assets/${kid.name}.png`)" alt="../assets/default_profile.png">
+                        <div v-if="images.includes(`${kid.name}`)">
+                            <img class="w-7 h-7 rounded-full" :src="require(`../assets/${kid.name}.png`)" alt="image" />
+                        </div>
+                        <div v-else>
+                            <img class="w-7 h-7 rounded-full" :src="require(`../assets/default_profile.png`)" alt="image" />
+                        </div>
                         {{kid.name}}
                     </span>
                 </div>
@@ -33,7 +38,8 @@ import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 export default {
     data() {
         return {
-            kids: []
+            kids: [],
+            images: []
         };
     },
     methods: {
@@ -80,6 +86,14 @@ export default {
     },
     mounted() {
         this.fetchKids();
+        const illustrations = require.context(
+            '@/assets',
+            true,
+            /^.*\.png$/
+        );
+        const keys = illustrations.keys();
+        const regex = /\.\/(.*?)\.png/;
+        this.images = keys.map(key => key.match(regex)[1]);
     }
 }
 </script>

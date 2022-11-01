@@ -2,7 +2,13 @@
   <div>
     <div class="text-emerald-400 text-3xl font-semibold underline">
         <span class="inline-flex">
-            <img class="w-10 h-10 rounded-full" :src="require(`../assets/${this.name}.png`)" alt="../assets/default_profile.png">
+            <!-- <img class="w-10 h-10 rounded-full" :src="require(`../assets/${this.name}.png`)" alt="../assets/default_profile.png"> -->
+            <div v-if="images.includes(`${this.name}`)">
+                <img class="w-10 h-10 rounded-full" :src="require(`../assets/${this.name}.png`)" alt="image" />
+            </div>
+            <div v-else>
+                <img class="w-10 h-10 rounded-full" :src="require(`../assets/default_profile.png`)" alt="image" />
+            </div>
             {{this.name}}
         </span>
     </div>
@@ -36,7 +42,8 @@ export default {
     data() {
         return {
             name: "",
-            chores: []
+            chores: [],
+            images: []
         }
     },
     methods: {
@@ -111,6 +118,14 @@ export default {
     mounted() {
         this.fetchName(this.$route.params.id);
         this.fetchChores();
+        const illustrations = require.context(
+            '@/assets',
+            true,
+            /^.*\.png$/
+        );
+        const keys = illustrations.keys();
+        const regex = /\.\/(.*?)\.png/;
+        this.images = keys.map(key => key.match(regex)[1]);
     }
 }
 </script>
