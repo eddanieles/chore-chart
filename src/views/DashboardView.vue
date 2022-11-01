@@ -6,7 +6,7 @@
             <router-link :to="`/kid/${kid.id}`" :kid="kid">
                 <div class="text-emerald-400 font-bold">
                     <span class="inline-flex">
-                        <div v-if="images.includes(`${kid.name}`)">
+                        <div v-if="images.includes(kid.name)">
                             <img class="w-7 h-7 rounded-full" :src="require(`../assets/${kid.name}.png`)" alt="image" />
                         </div>
                         <div v-else>

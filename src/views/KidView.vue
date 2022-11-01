@@ -3,7 +3,7 @@
     <div class="text-emerald-400 text-3xl font-semibold underline">
         <span class="inline-flex">
             <!-- <img class="w-10 h-10 rounded-full" :src="require(`../assets/${this.name}.png`)" alt="../assets/default_profile.png"> -->
-            <div v-if="images.includes(`${this.name}`)">
+            <div v-if="images.includes(this.name)">
                 <img class="w-10 h-10 rounded-full" :src="require(`../assets/${this.name}.png`)" alt="image" />
             </div>
             <div v-else>
